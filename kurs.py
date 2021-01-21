@@ -46,7 +46,7 @@ class Example(QMainWindow, QWidget):
 
     def initUI(self):
 
-        btn1 = QPushButton('Подключить CSV', self)
+        btn1 = QPushButton('Вывод информации из CSV', self)
         btn1.move(10, 10)
         btn1.resize(780,30)
         btn1.clicked.connect(self.buttonClicked1)
@@ -74,31 +74,28 @@ class Example(QMainWindow, QWidget):
         self.show()
     
     def buttonClicked1(self):
-        import sqlite3
-        conn = sqlite3.connect('lab3.db')
-        c = conn.cursor()
         c.execute("SELECT * FROM table1 WHERE s_price='545999'")
         row = c.fetchone() 
         exmpl1 = energy(row[0],row[1],row[2],row[3],row[4])
         self.textbox.setText('\nНазвание энергосберегающего мероприятия = {} \nСтоимость проведения мероприятия = {} \nТип затрагиваемого энергетического ресурса = {} \nОбъект, на котором будет проводится мероприятие = {} \nЭкономия на ресурсе в месяц после приминения мероприятия = {}\n'.format(exmpl1.name, exmpl1.price, exmpl1.energytype, exmpl1.objectof, exmpl1.mdiffrnce))
-        onb=3
-        return onb,exmpl1
 
     def buttonClicked2(self):
-        if (onb<1):
-            self.textbox.setText('Ошибка, не был подключен CSV файл')
-        elif (onb>2):
-            self.textbox.setText(exmpl1.ocup())
+        c.execute("SELECT * FROM table1 WHERE s_price='545999'")
+        row = c.fetchone() 
+        exmpl1 = energy(row[0],row[1],row[2],row[3],row[4])
+        self.textbox.setText(exmpl1.ocup())
 
     def buttonClicked3(self):
-        if (onb<1):
-            self.textbox.setText('Ошибка, не был подключен CSV файл')
-        elif (onb>2):
-            self.textbox.setText(exmpl1.percentof())
+        c.execute("SELECT * FROM table1 WHERE s_price='545999'")
+        row = c.fetchone() 
+        exmpl1 = energy(row[0],row[1],row[2],row[3],row[4])
+        self.textbox.setText(exmpl1.percentof())
 
 if __name__ == '__main__':
 
-    onb=0
+    import sqlite3
+    conn = sqlite3.connect('lab3.db')
+    c = conn.cursor()
     app = QApplication(sys.argv)
     ex = Example()
     sys.exit(app.exec_())
