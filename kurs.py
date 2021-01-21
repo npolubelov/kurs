@@ -68,29 +68,35 @@ class Example(QMainWindow, QWidget):
         btn4 = QPushButton('Сохранить результат в CSV', self)
         btn4.move(10, 700)
         btn4.resize(780,30)
+        btn4.clicked.connect(self.buttonClicked4)
 
         self.setGeometry(0, 0, 800, 740)
         self.setWindowTitle('Формирование энергосберегающих мероприятий')
         self.show()
     
     def buttonClicked1(self):
-        c.execute("SELECT * FROM table1 WHERE s_price='545999'")
+        c.execute("SELECT * FROM table1")
         row = c.fetchone() 
         exmpl1 = energy(row[0],row[1],row[2],row[3],row[4])
         self.textbox.setText('\nНазвание энергосберегающего мероприятия = {} \nСтоимость проведения мероприятия = {} \nТип затрагиваемого энергетического ресурса = {} \nОбъект, на котором будет проводится мероприятие = {} \nЭкономия на ресурсе в месяц после приминения мероприятия = {}\n'.format(exmpl1.name, exmpl1.price, exmpl1.energytype, exmpl1.objectof, exmpl1.mdiffrnce))
 
     def buttonClicked2(self):
-        c.execute("SELECT * FROM table1 WHERE s_price='545999'")
+        c.execute("SELECT * FROM table1")
         row = c.fetchone() 
         exmpl1 = energy(row[0],row[1],row[2],row[3],row[4])
         self.textbox.setText(exmpl1.ocup())
 
     def buttonClicked3(self):
-        c.execute("SELECT * FROM table1 WHERE s_price='545999'")
+        c.execute("SELECT * FROM table1")
         row = c.fetchone() 
         exmpl1 = energy(row[0],row[1],row[2],row[3],row[4])
         self.textbox.setText(exmpl1.percentof())
-
+    
+    def buttonClicked4(self):
+        mytext = self.textbox.toPlainText()
+        with open(r'out.txt', 'w') as f:
+            print(mytext, file=f)
+            
 if __name__ == '__main__':
 
     import sqlite3
